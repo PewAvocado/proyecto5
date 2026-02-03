@@ -1,3 +1,4 @@
+
 const myLibrary = [];
 
 const libro = document.querySelector("#name");
@@ -6,6 +7,7 @@ const genero = document.querySelector("#genero");
 const paginas = document.querySelector("#paginas");
 const leido = document.querySelector("#leido");
 
+const contenedor = document.querySelector("#contenedor");
 const formulario = document.querySelector("form");
 
 
@@ -15,6 +17,14 @@ function Book(book, author, genre, pages, read){
     this.genre = genre;
     this.pages = pages;
     this.read = read;
+}
+
+Book.prototype.leer = function(){
+    if (this.read === true){
+        return `Si lo has leido`;
+    } else {
+        return `Falta leer`;
+    };
 }
 
 function addBookLibrary(book, author, genre, pages, read){
@@ -29,10 +39,37 @@ formulario.addEventListener("submit" , (e) => {
     const genre = genero.value;
     const pages = paginas.value;
     const read = leido.checked;
+    
 
     addBookLibrary(book,author,genre,pages,read);
+    crearTarjeta();
 
     console.log(myLibrary);
-    formulario.reset;
+    formulario.reset();
 })
 
+function crearTarjeta(){
+    contenedor.textContent = "";
+    myLibrary.forEach(item => {
+    const tarjeta = document.createElement('div');
+    const libro = document.createElement("div");
+    libro.textContent = item.book;
+    const autor = document.createElement('div');
+    autor.textContent = item.author;
+    const genero = document.createElement('div');
+    genero.textContent = item.genre;
+    const paginas = document.createElement('div');
+    paginas.textContent = item.pages;
+    const visto = document.createElement('div');
+    visto.textContent = item.leer();
+    tarjeta.appendChild(libro);
+    tarjeta.appendChild(autor);
+    tarjeta.appendChild(genero);
+    tarjeta.appendChild(paginas);
+    tarjeta.appendChild(visto);
+    contenedor.appendChild(tarjeta);
+}) 
+}
+
+
+ 
