@@ -67,7 +67,11 @@ function crearTarjeta(){
     tarjeta.appendChild(genero);
     tarjeta.appendChild(paginas);
     tarjeta.appendChild(visto);
+    
     contenedor.appendChild(tarjeta);
+    contenedor.classList.add('contenedor');
+    tarjeta.classList.add('card');
+    libro.classList.add('titulo');
 }) 
 }
 
