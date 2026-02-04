@@ -59,7 +59,7 @@ function crearTarjeta(){
     const genero = document.createElement('div');
     genero.textContent = item.genre;
     const paginas = document.createElement('div');
-    paginas.textContent = item.pages;
+    paginas.textContent = `${item.pages} paginas`;
     const visto = document.createElement('div');
     visto.textContent = item.leer();
     tarjeta.appendChild(libro);

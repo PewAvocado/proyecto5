@@ -9,16 +9,16 @@
 <body>
     <form action="">
         <label for="name">Libro : </label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name" required maxlength="100">
         <label for="autor">Autor :</label>
-        <input type="text" name="autor" id="autor" required>
+        <input type="text" name="autor" id="autor" required maxlength="30">
         <label for="genero">Genero : </label>
-        <input type="text" name="genero" id="genero">
+        <input type="text" name="genero" id="genero" maxlength="20">
         <label for="paginas">Paginas :</label>
-        <input type="number" name="paginas" id="paginas" required>
+        <input type="number" name="paginas" id="paginas" required max="9999">
         <label for="leido">¿Esta leido?</label>
         <input type="checkbox" name="leido" id="leido">
-        <button type="submit">Agregar</button>
+        <button type="submit" id="add">Agregar</button>
     </form>
 
     <div id="contenedor"></div>
