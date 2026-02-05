@@ -29,6 +29,11 @@ Book.prototype.leer = function(){
     };
 }
 
+//Prototipo para el boton de cambio libros leiods y no leidos
+Book.prototype.cambiarLeer = function(){
+    this.read = !this.read;
+}
+
 //Funcion para agregar el nuevo libro al array
 function addBookLibrary(book, author, genre, pages, read){
     const biblioteca = new Book(book, author, genre, pages, read);
@@ -51,6 +56,7 @@ formulario.addEventListener("submit" , (e) => {
     formulario.reset();
 })
 
+//Funcion para crear la tarjeta que contiene los datos de los libros
 function crearTarjeta(){
     contenedor.textContent = "";
     myLibrary.forEach(item => {
@@ -62,6 +68,7 @@ function crearTarjeta(){
     const paginas = document.createElement('div');
     const visto = document.createElement('div');
     const borrar = document.createElement('button');
+    const yaLeido = document.createElement('button');
 
     //Asignar cada variables nueva (los divs) con el contenido colocado por el usuario
     tarjeta.setAttribute("data-id", item.id);
@@ -71,9 +78,16 @@ function crearTarjeta(){
     paginas.textContent = `${item.pages} paginas`;
     visto.textContent = item.leer();
     borrar.textContent = 'Borrar';
+    yaLeido.textContent = item.leer();
+
+    //Funcionalidad para el boton de leido y no leido
+    yaLeido.addEventListener("click", () => {
+        item.cambiarLeer();
+        crearTarjeta();
+    })
 
     //Funcionalidad del boton borrar
-    borrar.addEventListener("click", () =>{
+    borrar.addEventListener("click", () => {
         myLibrary = myLibrary.filter(actual => actual.id !== item.id);
         crearTarjeta();
     })
@@ -85,6 +99,7 @@ function crearTarjeta(){
     tarjeta.appendChild(paginas);
     tarjeta.appendChild(visto);
     tarjeta.appendChild(borrar);
+    tarjeta.appendChild(yaLeido);
 
     //Orden de los datos para cada tarjeta tenga su propio espacio
     contenedor.appendChild(tarjeta);
@@ -93,6 +108,8 @@ function crearTarjeta(){
     contenedor.classList.add('contenedor');
     tarjeta.classList.add('card');
     libro.classList.add('titulo');
+    borrar.classList.add('botoncito');
+    yaLeido.classList.add('botoncito');
 }) 
 }
 
