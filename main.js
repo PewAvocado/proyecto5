@@ -16,15 +16,24 @@ class Libro {
     }
 }
 
+class Library {
+    myLibrary = [];
+}
 
-//Array de la biblioteca
-let myLibrary = [];
+
+class Interface {
+    inputs = {
+        libro: document.querySelector("#name"),
+        autor: document.querySelector("#autor"),
+        genero: document.querySelector("#genero"),
+        paginas: document.querySelector("#paginas"),
+        leido: document.querySelector("#leido")
+    }
+}
+
 //Variables de cada label
 const libro = document.querySelector("#name");
-const autor = document.querySelector("#autor");
-const genero = document.querySelector("#genero");
-const paginas = document.querySelector("#paginas");
-const leido = document.querySelector("#leido");
+
 //Variables del formulario y contenedor
 const contenedor = document.querySelector("#contenedor");
 const formulario = document.querySelector("form");
