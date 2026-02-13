@@ -10,8 +10,10 @@ const leido = document.querySelector("#leido");
 const contenedor = document.querySelector("#contenedor");
 const formulario = document.querySelector("form");
 
-//Constructor para crear cada libro
-function Book(book, author, genre, pages, read){
+
+//Declaring new class, Libro
+class Libro {
+    constructor (book, author, genre, pages, read){
     this.book = book;
     this.author = author;
     this.genre = genre;
@@ -19,6 +21,9 @@ function Book(book, author, genre, pages, read){
     this.read = read;
     this.id = crypto.randomUUID();
 }
+}
+
+
 
 //Prototipo para el checkbox, asi no deba de salir true/false
 Book.prototype.leer = function(){
