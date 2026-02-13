@@ -1,3 +1,22 @@
+//Declaring new class, Libro
+class Libro {
+    constructor(book, author, genre, pages, read){
+    this.book = book;
+    this.author = author;
+    this.genre = genre;
+    this.pages = pages;
+    this.read = read;
+    this.id = crypto.randomUUID();
+    }
+    leer(){
+        return this.read ? "Si, lo has leido" : "No, falta leer";
+    }
+    cambiarLeer(){
+        this.read = !this.read;
+    }
+}
+
+
 //Array de la biblioteca
 let myLibrary = [];
 //Variables de cada label
@@ -11,33 +30,7 @@ const contenedor = document.querySelector("#contenedor");
 const formulario = document.querySelector("form");
 
 
-//Declaring new class, Libro
-class Libro {
-    constructor (book, author, genre, pages, read){
-    this.book = book;
-    this.author = author;
-    this.genre = genre;
-    this.pages = pages;
-    this.read = read;
-    this.id = crypto.randomUUID();
-}
-}
 
-
-
-//Prototipo para el checkbox, asi no deba de salir true/false
-Book.prototype.leer = function(){
-    if (this.read === true){
-        return `Si lo has leido`;
-    } else {
-        return `Falta leer`;
-    };
-}
-
-//Prototipo para el boton de cambio libros leiods y no leidos
-Book.prototype.cambiarLeer = function(){
-    this.read = !this.read;
-}
 
 //Funcion para agregar el nuevo libro al array
 function addBookLibrary(book, author, genre, pages, read){
