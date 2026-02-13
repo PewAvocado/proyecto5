@@ -18,6 +18,14 @@ class Libro {
 
 class Library {
     myLibrary = [];
+
+    addBookLibrary(finalBook){
+        this.myLibrary.push(finalBook);
+    }
+
+    deleteBook(id){
+        this.myLibrary = this.myLibrary.filter(actual => actual.id !== id);
+    }
 }
 
 
@@ -27,98 +35,92 @@ class Interface {
         autor: document.querySelector("#autor"),
         genero: document.querySelector("#genero"),
         paginas: document.querySelector("#paginas"),
-        leido: document.querySelector("#leido")
+        leido: document.querySelector("#leido"),
+    }
+    main = {
+        contenedor: document.querySelector(`#contenedor`),
+        formulario: document.querySelector(`form`)
+    }
+
+    constructor (Library){
+        this.Library = Library;
+        this.main.formulario.addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.manejarEnvio();
+        })
+    }
+
+    manejarEnvio(){
+        const nameBook = this.inputs.libro.value;
+        const authorBook = this.inputs.autor.value;
+        const genreBook = this.inputs.genero.value;
+        const pagesBook = this.inputs.paginas.value;
+        const readBook = this.inputs.leido.checked;
+
+        const newBook = new Libro (nameBook,authorBook,genreBook, pagesBook,readBook);
+        
+        this.Library.addBookLibrary(newBook);
+        this.createCard();
+
+        this.main.formulario.reset();
+    }
+
+    createCard(){
+        this.main.contenedor.textContent = "";
+        this.Library.myLibrary.forEach(item => {
+            const tarjeta = document.createElement('div');
+            const libro = document.createElement("div");
+            const autor = document.createElement('div');
+            const genero = document.createElement('div');
+            const paginas = document.createElement('div');
+            const visto = document.createElement('div');
+            const borrar = document.createElement('button');
+            const yaLeido = document.createElement('button');
+
+            borrar.addEventListener("click", () => {
+                this.Library.deleteBook(item.id);
+                this.createCard();
+            })
+
+            tarjeta.setAttribute("data-id", item.id);
+            libro.textContent = item.book;
+            autor.textContent = item.author;
+            genero.textContent = item.genre;
+            paginas.textContent = `${item.pages} paginas`;
+            visto.textContent = item.leer();
+            borrar.textContent = 'Borrar';
+            yaLeido.textContent = item.leer();
+
+            yaLeido.addEventListener("click", () => {
+                item.cambiarLeer();
+                this.createCard();
+            })
+
+            //Visualizacion inicial de los datos insertados
+            tarjeta.appendChild(libro);
+            tarjeta.appendChild(autor);
+            tarjeta.appendChild(genero);
+            tarjeta.appendChild(paginas);
+            tarjeta.appendChild(visto);
+            tarjeta.appendChild(borrar);
+            tarjeta.appendChild(yaLeido);
+
+            //Orden de los datos para cada tarjeta tenga su propio espacio
+            this.main.contenedor.appendChild(tarjeta);
+
+            //Estilos de las tarjetas, contenedores y del formulario
+            this.main.contenedor.classList.add('contenedor');
+            tarjeta.classList.add('card');
+            libro.classList.add('titulo');
+            borrar.classList.add('botoncito');
+            yaLeido.classList.add('botoncito');
+            
+        })
     }
 }
 
-//Variables de cada label
-const libro = document.querySelector("#name");
-
-//Variables del formulario y contenedor
-const contenedor = document.querySelector("#contenedor");
-const formulario = document.querySelector("form");
-
-
-
-
-//Funcion para agregar el nuevo libro al array
-function addBookLibrary(book, author, genre, pages, read){
-    const biblioteca = new Book(book, author, genre, pages, read);
-    myLibrary.push(biblioteca);
-}
-
-//El boton, capturar los datos y grabarlos como se debe
-formulario.addEventListener("submit" , (e) => {
-    e.preventDefault();
-    const book = libro.value;
-    const author = autor.value;
-    const genre = genero.value;
-    const pages = paginas.value;
-    const read = leido.checked;
-    
-    addBookLibrary(book,author,genre,pages,read);
-    crearTarjeta();
-
-    console.log(myLibrary);
-    formulario.reset();
-})
-
-//Funcion para crear la tarjeta que contiene los datos de los libros
-function crearTarjeta(){
-    contenedor.textContent = "";
-    myLibrary.forEach(item => {
-    //Espacios para las tarjetas, sus respectivos divs por datos
-    const tarjeta = document.createElement('div');
-    const libro = document.createElement("div");
-    const autor = document.createElement('div');
-    const genero = document.createElement('div');
-    const paginas = document.createElement('div');
-    const visto = document.createElement('div');
-    const borrar = document.createElement('button');
-    const yaLeido = document.createElement('button');
-
-    //Asignar cada variables nueva (los divs) con el contenido colocado por el usuario
-    tarjeta.setAttribute("data-id", item.id);
-    libro.textContent = item.book;
-    autor.textContent = item.author;
-    genero.textContent = item.genre;
-    paginas.textContent = `${item.pages} paginas`;
-    visto.textContent = item.leer();
-    borrar.textContent = 'Borrar';
-    yaLeido.textContent = item.leer();
-
-    //Funcionalidad para el boton de leido y no leido
-    yaLeido.addEventListener("click", () => {
-        item.cambiarLeer();
-        crearTarjeta();
-    })
-
-    //Funcionalidad del boton borrar
-    borrar.addEventListener("click", () => {
-        myLibrary = myLibrary.filter(actual => actual.id !== item.id);
-        crearTarjeta();
-    })
-
-    //Visualizacion inicial de los datos insertados
-    tarjeta.appendChild(libro);
-    tarjeta.appendChild(autor);
-    tarjeta.appendChild(genero);
-    tarjeta.appendChild(paginas);
-    tarjeta.appendChild(visto);
-    tarjeta.appendChild(borrar);
-    tarjeta.appendChild(yaLeido);
-
-    //Orden de los datos para cada tarjeta tenga su propio espacio
-    contenedor.appendChild(tarjeta);
-
-    //Estilos de las tarjetas, contenedores y del formulario
-    contenedor.classList.add('contenedor');
-    tarjeta.classList.add('card');
-    libro.classList.add('titulo');
-    borrar.classList.add('botoncito');
-    yaLeido.classList.add('botoncito');
-}) 
-}
+const miBiblioteca = new Library();
+const miApp = new Interface(miBiblioteca);
 
 
  
